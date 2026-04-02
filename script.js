@@ -125,6 +125,7 @@ function calcular() {
     default:
       alert("Operador inválido");
       return;
+      
   }
 
   document.getElementById("visor").innerText = resultado;
