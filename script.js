@@ -1,3 +1,4 @@
+/*
 // Array global para armazenar as tarefas
     let tarefas = [];
 
@@ -75,3 +76,58 @@
         ul.appendChild(li);
       });
     }
+      */
+
+// Variáveis globais para a calculadora
+let visor = "";
+let resultado = 0;
+let ligada = false;
+let historico = [];
+num1 = parseFloat(1);
+num2 = parseFloat(2);
+num3 = parseFloat(3);
+num4 = parseFloat(4);
+num5 = parseFloat(5);
+num6 = parseFloat(6);
+num7 = parseFloat(7);
+num8 = parseFloat(8);
+num9 = parseFloat(9);
+num0 = parseFloat(0);
+
+// Função para ligar/desligar a calculadora
+function ligarDesligar() {
+  ligada = !ligada;
+  if (!ligada) {
+    visor = "";
+    resultado = 0;
+    document.getElementById("visor").innerText = visor;
+  }
+}
+
+function calcular() {
+  let num1 = parseFloat(document.getElementById("num1").value);
+  let num2 = parseFloat(document.getElementById("num2").value);
+  let operador = document.getElementById("operador").value;
+
+  switch (operador) {
+    case "+":
+      resultado = num1 + num2;
+      break;
+    case "-":
+      resultado = num1 - num2;
+      break;
+    case "*":
+      resultado = num1 * num2;
+      break;
+    case "/":
+      resultado = num1 / num2;
+      break;
+    default:
+      alert("Operador inválido");
+      return;
+  }
+
+  document.getElementById("visor").innerText = resultado;
+  historico.push(`${num1} ${operador} ${num2} = ${resultado}`);
+}
+
