@@ -125,9 +125,11 @@ function calcular() {
     default:
       alert("Operador inválido");
       return;
+
   }
 
   document.getElementById("visor").innerText = resultado;
   historico.push(`${num1} ${operador} ${num2} = ${resultado}`);
 }
+
 
