@@ -433,20 +433,23 @@
     <div class="container">
         <h1>Calculadora</h1>
 
-        <div id="calculadora-corpo">
-            <input type="number" id="num1" placeholder="Nº 1">
+        <div id="calculadora-corpo"> // Os controles inicias começam desabilitados, o usuário precisa ligar a calculadora p/ usar.
+            <input type="number" id="num1" placeholder="Nº 1" disabled>
 
-            <select id="operador">
+            <select id="operador" disabled>
                 <option value="+">+</option>
                 <option value="-">-</option>
                 <option value="*">x</option>
                 <option value="/">÷</option>
             </select>
 
-            <input type="number" id="num2" placeholder="Nº 2">
+            <input type="number" id="num2" placeholder="Nº 2" disabled>
 
-            <button onclick="calcular()">Calcular</button>
+            <button id="btnCalcular" onclick="calcular()" disabled>Calcular</button>
+            <button id="btnPower" type="button" onclick="ligarDesligar()">Ligar</button>
         </div>
+
+        <p id="statusPower" class="status-power">Estado: Desligada</p>
 
         <div class="visor-container">
             <p>Resultado: <span id="visor">0</span></p>
