@@ -79,35 +79,38 @@
       */
 
 // Variáveis globais para a calculadora
-let visor = "";
+let ligada;
 let resultado = 0;
-let ligada = false;
 let historico = [];
-num1 = parseFloat(1);
-num2 = parseFloat(2);
-num3 = parseFloat(3);
-num4 = parseFloat(4);
-num5 = parseFloat(5);
-num6 = parseFloat(6);
-num7 = parseFloat(7);
-num8 = parseFloat(8);
-num9 = parseFloat(9);
-num0 = parseFloat(0);
+const num1Input = document.getElementById("num1");
+const num2Input = document.getElementById("num2");
+const operadorInput = document.getElementById("operador");
+const calcularBtn = document.getElementById("btnCalcular");
+const powerBtn = document.getElementById("btnPower");
+const statusPower = document.getElementById("statusPower");
+const visorEl = document.getElementById("visor");
 
 // Função para ligar/desligar a calculadora
 function ligarDesligar() {
   ligada = !ligada;
-  if (!ligada) {
-    visor = "";
-    resultado = 0;
-    document.getElementById("visor").innerText = visor;
-  }
+  [num1Input, num2Input, operadorInput, calcularBtn].forEach((el) => { //Definimos um array com os elementos que queremos habilitar/desabilitar
+    el.disabled = !ligada;
+  });
+  powerBtn.textContent = ligada ? "Desligar" : "Ligar"; // Troca o texto do botão de ligar/desligar
+  statusPower.textContent = ligada ? "Estado: Ligada" : "Estado: Desligada"; // Atualiza o status da calculadora
+  visorEl.innerText = ligada ? "0" : ""; // Limpa o visor quando desligada, ou mostra 0 quando ligada
+  resultado = 0; // Reseta o resultado quando a calculadora é ligada ou desligada
 }
 
 function calcular() {
-  let num1 = parseFloat(document.getElementById("num1").value);
-  let num2 = parseFloat(document.getElementById("num2").value);
-  let operador = document.getElementById("operador").value;
+  if (!ligada) {
+    alert("Ligue a calculadora primeiro.");
+    return;
+  }
+
+  const num1 = parseFloat(num1Input.value);
+  const num2 = parseFloat(num2Input.value);
+  const operador = operadorInput.value;
 
   switch (operador) {
     case "+":
@@ -125,10 +128,9 @@ function calcular() {
     default:
       alert("Operador inválido");
       return;
-
   }
 
-  document.getElementById("visor").innerText = resultado;
+  visorEl.innerText = resultado;
   historico.push(`${num1} ${operador} ${num2} = ${resultado}`);
 }
 
