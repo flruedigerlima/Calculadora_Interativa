@@ -21,9 +21,33 @@ body {
     input {
       width: 70%;
       padding: 8px;
+      margin: 4px 0;
+      display: block;
       border: 1px solid #ccc;
       border-radius: 8px;
+      background: white;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
     }
+
+    #operador {
+      width: 10%;
+      padding: 8px;
+      margin: 4px 0 auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-align: center;
+      text-align-last: center;
+      direction: ltr;
+      cursor: pointer;
+    }
+
     button {
       padding: 8px 12px;
       border: none;

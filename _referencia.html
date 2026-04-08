@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Interativa</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #141e30, #243b55);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      width: 380px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .tema-info {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    #visor {
+      width: 100%;
+      height: 70px;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      padding: 15px;
+      font-size: 28px;
+      text-align: right;
+      background: #0f172a;
+      color: #fff;
+      outline: none;
+    }
+
+    .botoes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      height: 60px;
+      border: none;
+      border-radius: 12px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+      opacity: 0.9;
+    }
+
+    .numero {
+      background: #e2e8f0;
+      color: #111827;
+    }
+
+    .operador {
+      background: #38bdf8;
+      color: white;
+    }
+
+    .igual {
+      background: #22c55e;
+      color: white;
+    }
+
+    .limpar {
+      background: #ef4444;
+      color: white;
+    }
+
+    .extra {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .historico-area {
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .historico-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .historico-topo h2 {
+      font-size: 18px;
+    }
+
+    #listaHistorico {
+      list-style: none;
+      max-height: 180px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    #listaHistorico li {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .contador {
+      margin-top: 10px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .tema-claro {
+      background: linear-gradient(135deg, #dbeafe, #93c5fd);
+      color: #111827;
+    }
+
+    .tema-claro .container {
+      background: rgba(255, 255, 255, 0.6);
+      color: #111827;
+    }
+
+    .tema-claro #visor {
+      background: white;
+      color: #111827;
+    }
+
+    .tema-claro .historico-area {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .tema-claro #listaHistorico li {
+      background: rgba(0, 0, 0, 0.08);
+      color: #111827;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Calculadora Interativa</h1>
+    <p class="tema-info" id="temaInfo">Tema atual: Escuro</p>
+
+    <input type="text" id="visor" value="" placeholder="0" readonly>
+
+    <div class="botoes">
+      <button class="limpar">C</button>
+      <button class="extra">←</button>
+      <button class="extra">Tema</button>
+      <button class="operador">/</button>
+
+      <button class="numero">7</button>
+      <button class="numero">8</button>
+      <button class="numero">9</button>
+      <button class="operador">*</button>
+
+      <button class="numero">4</button>
+      <button class="numero">5</button>
+      <button class="numero">6</button>
+      <button class="operador">-</button>
+
+      <button class="numero">1</button>
+      <button class="numero">2</button>
+      <button class="numero">3</button>
+      <button class="operador">+</button>
+
+      <button class="numero">0</button>
+      <button class="numero">.</button>
+      <button class="igual">=</button>
+      <button class="extra">%</button>
+    </div>
+
+    <div class="historico-area">
+      <div class="historico-topo">
+        <h2>Histórico</h2>
+        <button id="limparHistorico" class="limpar" style="height: 38px; font-size: 14px; padding: 0 10px;">
+          Limpar
+        </button>
+      </div>
+
+      <ul id="listaHistorico"></ul>
+      <p class="contador" id="contadorHistorico">Total de cálculos: 0</p>
+    </div>
+  </div>
+
+  <script>
+    // ==========================
+    // VARIÁVEIS DE TIPOS DIFERENTES
+    // string, number, boolean e array
+    // ==========================
+    let expressao = "";           // string
+    let totalCalculos = 0;        // number
+    let temaEscuro = true;        // boolean
+    let historico = [];           // array
+
+    // ==========================
+    // SELEÇÃO DE ELEMENTOS DO DOM
+    // ==========================
+    const visor = document.getElementById("visor");
+    const botoes = document.querySelectorAll(".botoes button");
+    const listaHistorico = document.getElementById("listaHistorico");
+    const contadorHistorico = document.getElementById("contadorHistorico");
+    const limparHistoricoBtn = document.getElementById("limparHistorico");
+    const temaInfo = document.getElementById("temaInfo");
+    const body = document.body;
+
+    // ==========================
+    // FUNÇÃO PARA ATUALIZAR O VISOR
+    // ==========================
+    function atualizarVisor(texto) {
+      visor.value = texto;
+    }
+
+    // ==========================
+    // FUNÇÃO COM PARÂMETROS E RETORNO
+    // Faz o cálculo entre dois números
+    // ==========================
+    function calcular(num1, operador, num2) {
+      let resultado;
+
+      if (operador === "+") {
+        resultado = num1 + num2;
+      } else if (operador === "-") {
+        resultado = num1 - num2;
+      } else if (operador === "*") {
+        resultado = num1 * num2;
+      } else if (operador === "/") {
+        if (num2 === 0) {
+          return "Erro";
+        }
+        resultado = num1 / num2;
+      } else if (operador === "%") {
+        resultado = num1 % num2;
+      } else {
+        return "Erro";
+      }
+
+      return resultado;
+    }
+
+    // ==========================
+    // FUNÇÃO PARA ADICIONAR ITEM NO HISTÓRICO
+    // Inserção dinâmica no DOM
+    // ==========================
+    function adicionarHistorico(conta) {
+      historico.push(conta);
+      totalCalculos++;
+
+      const item = document.createElement("li");
+      item.textContent = conta;
+      listaHistorico.appendChild(item);
+
+      contadorHistorico.textContent = "Total de cálculos: " + totalCalculos;
+    }
+
+    // ==========================
+    // FUNÇÃO PARA LIMPAR HISTÓRICO
+    // Remoção dinâmica no DOM
+    // ==========================
+    function limparHistorico() {
+      historico = [];
+      totalCalculos = 0;
+      listaHistorico.innerHTML = "";
+      contadorHistorico.textContent = "Total de cálculos: 0";
+    }
+
+    // ==========================
+    // FUNÇÃO PARA TROCAR O TEMA
+    // Manipulação de estilo no DOM
+    // ==========================
+    function trocarTema() {
+      temaEscuro = !temaEscuro;
+
+      if (temaEscuro === true) {
+        body.classList.remove("tema-claro");
+        temaInfo.textContent = "Tema atual: Escuro";
+      } else {
+        body.classList.add("tema-claro");
+        temaInfo.textContent = "Tema atual: Claro";
+      }
+    }
+
+    // ==========================
+    // FUNÇÃO PARA RESOLVER A EXPRESSÃO
+    // Usa conversão de string para number
+    // ==========================
+    function resolverExpressao() {
+      let operadorEncontrado = "";
+      let posicaoOperador = -1;
+
+      // Loop para encontrar o operador
+      for (let i = 0; i < expressao.length; i++) {
+        if (
+          expressao[i] === "+" ||
+          expressao[i] === "-" ||
+          expressao[i] === "*" ||
+          expressao[i] === "/" ||
+          expressao[i] === "%"
+        ) {
+          operadorEncontrado = expressao[i];
+          posicaoOperador = i;
+          break;
+        }
+      }
+
+      // Condicional de comparação
+      if (posicaoOperador === -1) {
+        return;
+      }
+
+      let parte1 = expressao.substring(0, posicaoOperador);
+      let parte2 = expressao.substring(posicaoOperador + 1);
+
+      // Conversão entre tipos de dados
+      let numero1 = parseFloat(parte1);
+      let numero2 = parseFloat(parte2);
+
+      // Verificação
+      if (isNaN(numero1) || isNaN(numero2)) {
+        atualizarVisor("Erro");
+        expressao = "";
+        return;
+      }
+
+      const resultado = calcular(numero1, operadorEncontrado, numero2);
+
+      if (resultado === "Erro") {
+        atualizarVisor("Erro");
+        expressao = "";
+      } else {
+        let contaCompleta = `${numero1} ${operadorEncontrado} ${numero2} = ${resultado}`;
+        adicionarHistorico(contaCompleta);
+        expressao = String(resultado); // conversão de number para string
+        atualizarVisor(expressao);
+      }
+    }
+
+    // ==========================
+    // LOOP PARA PERCORRER OS BOTÕES
+    // ==========================
+    for (let i = 0; i < botoes.length; i++) {
+      botoes[i].addEventListener("click", function () {
+        const valorBotao = botoes[i].textContent;
+
+        if (valorBotao === "C") {
+          expressao = "";
+          atualizarVisor("");
+        } else if (valorBotao === "←") {
+          expressao = expressao.slice(0, -1);
+          atualizarVisor(expressao);
+        } else if (valorBotao === "=") {
+          resolverExpressao();
+        } else if (valorBotao === "Tema") {
+          trocarTema();
+        } else {
+          // Evita adicionar dois operadores seguidos
+          const ultimoCaractere = expressao[expressao.length - 1];
+
+          const ehOperadorAtual =
+            valorBotao === "+" ||
+            valorBotao === "-" ||
+            valorBotao === "*" ||
+            valorBotao === "/" ||
+            valorBotao === "%";
+
+          const ultimoEhOperador =
+            ultimoCaractere === "+" ||
+            ultimoCaractere === "-" ||
+            ultimoCaractere === "*" ||
+            ultimoCaractere === "/" ||
+            ultimoCaractere === "%";
+
+          if (ehOperadorAtual && ultimoEhOperador) {
+            return;
+          }
+
+          expressao += valorBotao;
+          atualizarVisor(expressao);
+        }
+      });
+    }
+
+    // Botão de limpar histórico
+    limparHistoricoBtn.addEventListener("click", limparHistorico);
+  </script>
+</body>
+
+</html>
