@@ -99,6 +99,10 @@ function ligarDesligar() {
   powerBtn.textContent = ligada ? "Desligar" : "Ligar"; // Troca o texto do botão de ligar/desligar
   statusPower.textContent = ligada ? "Estado: Ligada" : "Estado: Desligada"; // Atualiza o status da calculadora
   visorEl.innerText = ligada ? "0" : ""; // Limpa o visor quando desligada, ou mostra 0 quando ligada
+  if (!ligada) {
+    historico = [];
+    atualizarHistorico();
+  }
   resultado = 0; // Reseta o resultado quando a calculadora é ligada ou desligada
 }
 
@@ -126,12 +130,20 @@ function calcular() {
       resultado = num1 / num2;
       break;
     default:
-      alert("Operador inválido");
-      return;
+      return alert("Operador inválido");
   }
 
   visorEl.innerText = resultado;
   historico.push(`${num1} ${operador} ${num2} = ${resultado}`);
+  atualizarHistorico();
 }
 
-
+function atualizarHistorico() {
+  const ul = document.getElementById("historico-lista");  // Pega a lista não ordenada 'ul' do HTML
+  ul.innerHTML = "";  // Limpa todo o conteúdo da lista (remove itens antigos)
+  historico.forEach(calc => {  // Para cada string no array histórico...
+    const li = document.createElement("li");  // ...cria um novo item de lista <li>
+    li.textContent = calc;  // Define o texto do <li> como a string do cálculo.
+    ul.appendChild(li);  // Adiciona o <li> à <ul>
+  });
+}
