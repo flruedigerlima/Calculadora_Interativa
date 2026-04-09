@@ -13,28 +13,28 @@
     <h1>Calculadora</h1>
     <!-- Os controles inicias começam desabilitados, o usuário precisa ligar a calculadora p/ usar. -->
     <div id="calculadora-corpo">
-      <input type="number" id="num1" placeholder="Nº 1" disabled>
+      <input type="number" id="num1" placeholder="Nº 1" disabled> <!-- Campo para o primeiro número, inicialmente desabilitado -->
 
-      <select id="operador" disabled>
+      <select id="operador" disabled> <!-- Campo para selecionar o operador, inicialmente desabilitado -->
         <option value="+">+</option>
         <option value="-">-</option>
         <option value="*">x</option>
         <option value="/">/</option>
       </select>
 
-      <input type="number" id="num2" placeholder="Nº 2" disabled>
+      <input type="number" id="num2" placeholder="Nº 2" disabled> <!-- Campo para o segundo número, inicialmente desabilitado -->
 
-      <button id="btnCalcular" onclick="calcular()" disabled>Calcular</button>
-      <button id="btnPower" type="button" onclick="ligarDesligar()">Ligar</button>
+      <button id="btnCalcular" onclick="calcular()" disabled>Calcular</button> <!-- Botão para realizar o cálculo, inicialmente desabilitado -->
+      <button id="btnPower" type="button" onclick="ligarDesligar()">Ligar</button> <!-- Botão para ligar/desligar a calculadora -->
     </div>
 
-    <p id="statusPower" class="status-power">Estado: Desligada</p>
+    <p id="statusPower" class="status-power">Estado: Desligada</p> <!-- Indicador de estado da calculadora (Ligada/Desligada) -->
 
     <div class="visor-container">
       <p>Resultado: <span id="visor">0</span></p>
     </div>
 
-    <ul id="historico-lista"></ul>
+    <ul id="historico-lista"></ul> <!-- Lista para exibir o histórico de cálculos -->
   </div>
 
   <footer>
