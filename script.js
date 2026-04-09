@@ -16,6 +16,7 @@ function ligarDesligar() {
   [num1Input, num2Input, operadorInput, calcularBtn].forEach((el) => { //Definimos um array com os elementos que queremos habilitar/desabilitar
     el.disabled = !ligada;
   });
+  // O .textContent pode ser usado para obter ou definir o conteúdo de texto de um elemento.
   powerBtn.textContent = ligada ? "Desligar" : "Ligar"; // Troca o texto do botão de ligar/desligar
   statusPower.textContent = ligada ? "Estado: Ligada" : "Estado: Desligada"; // Atualiza o status da calculadora
   visorEl.innerText = ligada ? "0" : ""; // Limpa o visor quando desligada, ou mostra 0 quando ligada
@@ -26,6 +27,7 @@ function ligarDesligar() {
   resultado = 0; // Reseta o resultado quando a calculadora é ligada ou desligada
 }
 
+// função para executar a operação matemática escolhida
 function executarOperacao(num1, num2, operador) { 
   let resultadoLocal;
 
@@ -54,6 +56,7 @@ function executarOperacao(num1, num2, operador) {
   return resultadoLocal; // Retorna o resultado da operação para a função calcular()
 }
 
+//função
 function calcular() { //
   if (!ligada) {
     alert("Ligue a calculadora primeiro.");
@@ -71,7 +74,7 @@ function calcular() { //
 
   resultado = executarOperacao(num1, num2, operador); // Chama a função que executa a operação e armazena o resultado
   visorEl.innerText = resultado; // Atualiza o visor com o resultado
-  historico.push(`${num1} ${operador} ${num2} = ${resultado}`); // Adiciona a string do cálculo ao array de histórico
+  historico.push(`${num1} ${operador} ${num2} = ${resultado}`); // Adiciona a string do cálculo ao array de histórico no final do array.
   atualizarHistorico();
 }
 
@@ -80,7 +83,7 @@ function atualizarHistorico() {
   const ul = document.getElementById("historico-lista");  // Pega a lista não ordenada <ul> do HTML
   ul.innerHTML = "";  // Limpa todo o conteúdo da lista (remove itens antigos)
 
-  for (let i = 0; i < historico.length; i++) {
+  for (let i = 0; i < historico.length; i++) { // .length retorna um número (o tamanho do array), permitindo a comparação 'i < numero'
     const li = document.createElement("li");  // Cria um novo item de lista <li>
     li.textContent = historico[i];  // Define o texto do <li> como a string do cálculo.
     ul.appendChild(li);  // Adiciona o <li> na <ul>
