@@ -1,14 +1,14 @@
 // Variáveis globais para a calculadora
 let ligada = false;
-let resultado = 0;
-let historico = [];
+let resultado = 0; // Variável para armazenar o resultado da operação atual
+let historico = []; // Array para armazenar o histórico de cálculos
 const num1Input = document.getElementById("num1"); // Pega o elemento de input do número 1 do HTML e armazena em uma variável para poder usar depois
 const num2Input = document.getElementById("num2");
 const operadorInput = document.getElementById("operador"); // Pega o elemento de select do operador do HTML e armazena em uma variável para poder usar depois
 const calcularBtn = document.getElementById("btnCalcular"); // Pega o elemento do botão de calcular do HTML e armazena em uma variável para poder usar depois
 const powerBtn = document.getElementById("btnPower"); // Pega o elemento do botão de ligar/desligar do HTML e armazena em uma variável para poder usar depois
 const statusPower = document.getElementById("statusPower"); // Pega o elemento do status da calculadora do HTML e armazena em uma variável para poder usar depois
-const visorEl = document.getElementById("visor");
+const visorEl = document.getElementById("visor"); // Pega o elemento do visor da calculadora do HTML e armazena em uma variável para poder usar depois
 
 // Função para ligar/desligar a calculadora
 function ligarDesligar() {
@@ -24,27 +24,6 @@ function ligarDesligar() {
     atualizarHistorico();
   }
   resultado = 0; // Reseta o resultado quando a calculadora é ligada ou desligada
-}
-
-function calcular() { //
-  if (!ligada) {
-    alert("Ligue a calculadora primeiro.");
-    return;
-  }
-
-  const num1 = parseFloat(num1Input.value); // Converte o valor do input para número de ponto flutuante
-  const num2 = parseFloat(num2Input.value);
-  const operador = operadorInput.value; //  Pega o valor do operador selecionado
-
-  if (Number.isNaN(num1) || Number.isNaN(num2)) {  // Verifica se os valores convertidos são um número ou não (NaN)
-    alert("Digite números válidos para os dois campos.");
-    return;
-  }
-
-  resultado = executarOperacao(num1, num2, operador); // Chama a função que executa a operação e armazena o resultado
-  visorEl.innerText = resultado; // Atualiza o visor com o resultado
-  historico.push(`${num1} ${operador} ${num2} = ${resultado}`); // Adiciona a string do cálculo ao array de histórico
-  atualizarHistorico();
 }
 
 function executarOperacao(num1, num2, operador) { 
@@ -74,6 +53,28 @@ function executarOperacao(num1, num2, operador) {
 
   return resultadoLocal; // Retorna o resultado da operação para a função calcular()
 }
+
+function calcular() { //
+  if (!ligada) {
+    alert("Ligue a calculadora primeiro.");
+    return;
+  }
+
+  const num1 = parseFloat(num1Input.value); // Converte o valor do input para número de ponto flutuante
+  const num2 = parseFloat(num2Input.value);
+  const operador = operadorInput.value; //  Pega o valor do operador selecionado
+  
+  if (Number.isNaN(num1) || Number.isNaN(num2)) {  // Verifica se os valores convertidos são um número ou não (NaN)
+    alert("Digite números válidos para os dois campos.");
+    return;
+  }
+
+  resultado = executarOperacao(num1, num2, operador); // Chama a função que executa a operação e armazena o resultado
+  visorEl.innerText = resultado; // Atualiza o visor com o resultado
+  historico.push(`${num1} ${operador} ${num2} = ${resultado}`); // Adiciona a string do cálculo ao array de histórico
+  atualizarHistorico();
+}
+
 
 function atualizarHistorico() {
   const ul = document.getElementById("historico-lista");  // Pega a lista não ordenada <ul> do HTML
