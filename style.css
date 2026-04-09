@@ -1,4 +1,4 @@
-body {
+body { 
       font-family: Arial, sans-serif;
       background: linear-gradient(120deg, #74ebd5, #9face6);
       display: flex;
@@ -8,6 +8,7 @@ body {
       min-height: 100vh;
       margin: 0;
     }
+
     .container {
       background: white;
       padding: 20px;
@@ -16,10 +17,12 @@ body {
       width: 350px;
     
     }
+
     h1 {
       text-align: center;
       color: #333;
     }
+
     input {
       width: 70%;
       padding: 8px;
@@ -59,13 +62,16 @@ body {
       cursor: pointer;
       margin: 5px 5px 5px 0;
     }
+
     button:hover {
       background: #5146d9;
     }
+
     ul {
       list-style: none;
       padding: 0;
     }
+
     li {
       background: #f1f1f1;
       margin: 5px 0;
@@ -75,10 +81,12 @@ body {
       justify-content: space-between;
       align-items: center;
     }
+
     .detalhes {
       font-size: 0.9em;
       color: #555;
     }
+    
     footer {
       text-align: center;
       margin-top: 20px;
